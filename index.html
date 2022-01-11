@@ -25,16 +25,17 @@
             <h1>Registrierung für unsere online Messe</h1>
             <form class="form">
                 <fieldset class="username">
-                    <input type="text" placeholder="Name" />
+                    <input id="input-name" type="text" placeholder="Name" />
                 </fieldset>
                 <fieldset class="email">
-                    <input type="email" placeholder="E-Mail" />
+                    <input id="input-email" type="email" placeholder="E-Mail" />
                 </fieldset>
                 <fieldset class="Firma">
-                    <input type="company" placeholder="Firma" />
+                    <input id="input-company" type="text" placeholder="Firma" />
                 </fieldset>
-                <button type="button" class="btn"
-                    onclick="location.href='https://hubs.mozilla.com/FBVPE5x/lime-simplistic-picnic/'">Registrieren</button>
+                <button type="submit" class="btn"
+                        id="submit-button"
+                    >Registrieren</button>
             </form>
         </div>
     </div>
@@ -54,5 +55,35 @@
    </div>
 
 </footer>
+
+<script>
+    const submitBtn = document.getElementById('submit-button');
+
+    submitBtn.addEventListener('click', (submitEvent) => {
+        submitEvent.preventDefault();
+        submitEvent.stopPropagation();
+
+        const name = document.getElementById('input-name').value || 'Name nicht ausgefüllt';
+        const email = document.getElementById('input-email').value || 'Email nicht ausgefüllt';
+        const company = document.getElementById('input-company').value || 'Firma nicht ausgefüllt';
+
+        const body = {
+            name,
+            email,
+            company,
+        };
+
+        window.fetch('/collect-user-data', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        }).then(console.warn);
+
+        location.href='https://hubs.mozilla.com/FBVPE5x/lime-simplistic-picnic/';
+    });
+</script>
 
 </html>
